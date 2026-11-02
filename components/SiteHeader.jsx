@@ -3,17 +3,24 @@
 import { useEffect, useState } from "react";
 
 const NAV = [
-  { label: "Home", href: "#home" },
-  { label: "About", href: "#about" },
-  { label: "Stories", href: "#stories" },
-  { label: "Films", href: "#films" },
-  { label: "Blog", href: "#blog" },
-  { label: "Contact", href: "#contact" },
+  { label: "Home", hash: "#home" },
+  { label: "About", hash: "#about" },
+  { label: "Stories", path: "/stories" },
+  { label: "Films", path: "/films" },
+  { label: "Outdoors", path: "/outdoors" },
 ];
 
-function Logo({ onClick }) {
+/* Hash items participate in the scroll-spy; path items are page links. */
+const hrefFor = (item, base) => item.path ?? `${base}${item.hash}`;
+
+function Logo({ onClick, base = "" }) {
   return (
-    <a className="logo" href="#home" onClick={onClick} aria-label="Pepper Green — home">
+    <a
+      className="logo"
+      href={`${base}#home`}
+      onClick={onClick}
+      aria-label="Pepper Green — home"
+    >
       <span className="logo__name">
         pepper green
         <sup>®</sup>
@@ -23,10 +30,12 @@ function Logo({ onClick }) {
   );
 }
 
-export default function SiteHeader() {
+export default function SiteHeader({ base = "", solid = false }) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [active, setActive] = useState("home");
+  const [active, setActive] = useState("");
+
+  const isSolid = solid || scrolled;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -41,8 +50,8 @@ export default function SiteHeader() {
   }, [menuOpen]);
 
   useEffect(() => {
-    const sections = NAV.map((item) =>
-      document.querySelector(item.href)
+    const sections = NAV.filter((item) => item.hash).map((item) =>
+      document.querySelector(item.hash)
     ).filter(Boolean);
 
     if (!sections.length) return;
@@ -72,16 +81,20 @@ export default function SiteHeader() {
 
   return (
     <>
-      <header className={`site-header ${scrolled ? "is-scrolled" : ""}`}>
-        <Logo onClick={closeMenu} />
+      <header className={`site-header ${isSolid ? "is-scrolled" : ""}`}>
+        <Logo onClick={closeMenu} base={base} />
 
         <nav className="main-nav" aria-label="Primary">
           {NAV.map((item) => (
             <a
-              key={item.href}
-              href={item.href}
-              className={active === item.href.slice(1) ? "is-active" : ""}
-              aria-current={active === item.href.slice(1) ? "page" : undefined}
+              key={item.label}
+              href={hrefFor(item, base)}
+              className={
+                item.hash && active === item.hash.slice(1) ? "is-active" : ""
+              }
+              aria-current={
+                item.hash && active === item.hash.slice(1) ? "page" : undefined
+              }
             >
               {item.label}
             </a>
@@ -107,7 +120,7 @@ export default function SiteHeader() {
         aria-hidden={!menuOpen}
       >
         <div className="mobile-menu__head">
-          <Logo onClick={closeMenu} />
+          <Logo onClick={closeMenu} base={base} />
           <button
             type="button"
             className="mobile-menu__close"
@@ -121,8 +134,8 @@ export default function SiteHeader() {
         <nav className="mobile-menu__nav" aria-label="Mobile">
           {NAV.map((item, index) => (
             <a
-              key={item.href}
-              href={item.href}
+              key={item.label}
+              href={hrefFor(item, base)}
               onClick={closeMenu}
               tabIndex={menuOpen ? 0 : -1}
             >

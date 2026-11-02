@@ -1,20 +1,5 @@
 import "./globals.css";
-import { Cormorant_Garamond, Jost, Poppins } from "next/font/google";
-
-const display = Cormorant_Garamond({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  style: ["normal", "italic"],
-  variable: "--font-display",
-  display: "swap",
-});
-
-const body = Jost({
-  subsets: ["latin"],
-  weight: ["300", "400", "500"],
-  variable: "--font-body",
-  display: "swap",
-});
+import { Poppins } from "next/font/google";
 
 const logo = Poppins({
   subsets: ["latin"],
@@ -45,7 +30,7 @@ export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
-      className={`${display.variable} ${body.variable} ${logo.variable}`}
+      className={`${logo.variable}`}
     >
       <body>{children}</body>
     </html>

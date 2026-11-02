@@ -2,7 +2,75 @@
    Pepper Green — Wedding Company
    ========================================================================== */
 
+/* Fonts used by the reference site (peppergreenwedding.com):
+   Recoleta for headings, Sofia Pro for body copy. */
+@font-face {
+  font-family: "Recoleta";
+  src: url("/fonts/recoleta-400.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Recoleta";
+  src: url("/fonts/recoleta-500.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Recoleta";
+  src: url("/fonts/recoleta-600.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Recoleta";
+  src: url("/fonts/recoleta-700.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Sofia Pro";
+  src: url("/fonts/sofia-pro-300.woff2") format("woff2");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Sofia Pro";
+  src: url("/fonts/sofia-pro-400.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Sofia Pro";
+  src: url("/fonts/sofia-pro-500.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Sofia Pro";
+  src: url("/fonts/sofia-pro-600.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
+  --font-display: "Recoleta", Georgia, serif;
+  --font-body: "Sofia Pro", system-ui, sans-serif;
   --cream: #f7f3ec;
   --cream-2: #efe8dc;
   --ink: #211f1a;
@@ -28,9 +96,9 @@ html {
 
 body {
   margin: 0;
-  background: var(--cream);
+  background: var(--ref-bg);
   color: var(--ink);
-  font-family: var(--font-body), "Jost", system-ui, sans-serif;
+  font-family: var(--font-body);
   font-weight: 300;
   font-size: 16px;
   line-height: 1.6;
@@ -182,10 +250,23 @@ section[id] {
 .site-header.is-scrolled {
   padding-top: 1.15rem;
   padding-bottom: 1.15rem;
-  background: rgba(20, 19, 15, 0.82);
+  /* reference scrolled bar: cream #FFFDF9, dark links, no logo */
+  background: rgba(255, 253, 250, 0.94);
   -webkit-backdrop-filter: blur(16px);
   backdrop-filter: blur(16px);
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.07);
+  box-shadow: 0 1px 0 rgba(67, 73, 63, 0.08);
+  color: #43493f;
+}
+
+/* Like the reference site, the logo fades out once you scroll */
+.logo {
+  transition: opacity 0.4s var(--ease);
+}
+
+.site-header.is-scrolled .logo {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
 }
 
 .logo {
@@ -234,9 +315,10 @@ section[id] {
 .main-nav a {
   position: relative;
   padding: 0.35rem 0;
-  font-size: 0.66rem;
-  font-weight: 400;
-  letter-spacing: 0.26em;
+  font-family: var(--font-display);
+  font-size: min(0.75rem, 1rem - 0.28vw);
+  font-weight: 500;
+  letter-spacing: 0.25em;
   text-transform: uppercase;
   opacity: 0.82;
   transition: opacity 0.35s var(--ease);
@@ -601,17 +683,18 @@ section[id] {
 .about__intro {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: clamp(2.5rem, 4vw, 4.5rem);
+  gap: clamp(1.5rem, 2.1vw, 2rem); /* ~30px at 1440 — reference columns are 570px */
   align-items: start;
 }
 
 .about__title {
-  font-family: var(--font-display), Georgia, serif;
-  font-size: clamp(2.2rem, 3.3vw, 2.75rem);
-  font-weight: 700;
-  line-height: 1.08;
-  letter-spacing: -0.012em;
-  color: var(--ink);
+  font-family: var(--font-display);
+  /* exact reference fluid sizing: 34px/44.2px at 1440, 28.5px at 1000 */
+  font-size: clamp(1.66rem, 1rem + 1.25vw, 2.125rem);
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: normal;
+  color: #000;
 }
 
 .about__title-line {
@@ -623,12 +706,18 @@ section[id] {
   white-space: nowrap;
 }
 
+/* Exact match to the reference: fills the 570px column, Sofia Pro 300
+   16px/28px, one blank line after the main paragraph and none between
+   the two SEO lines. */
 .about__copy p {
-  max-width: 58ch;
-  margin: 0 0 1.6rem;
-  color: var(--muted);
+  margin: 0;
+  color: #5a5858;
   font-size: 1rem;
-  line-height: 1.95;
+  line-height: 1.75;
+}
+
+.about__copy p:first-child {
+  margin-bottom: 1.75rem;
 }
 
 .about__copy p:last-child {
@@ -661,6 +750,296 @@ section[id] {
 
 .about__figure:hover img {
   transform: scale(1.035);
+}
+
+/* ==========================================================================
+   About Us Brief (Referral Image 1)
+   ========================================================================== */
+
+.about-brief {
+  margin-top: clamp(4rem, 6vw, 5.5rem);
+  text-align: center;
+}
+
+/* Exact typography from the reference site:
+   headings — Recoleta 500, min(1.75rem, 1rem + 0.83vw), line-height 1.4, #43493F
+   body     — Sofia Pro 300, 1rem, line-height 1.75, #5A5858 */
+.about-brief__title {
+  font-family: var(--font-display);
+  font-size: min(1.75rem, 1rem + 0.83vw);
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: normal;
+  color: #43493f;
+  margin: 0 0 1.75rem;
+}
+
+.about-brief__copy {
+  max-width: 1170px;
+  margin: 0 auto;
+}
+
+.about-brief__copy p {
+  font-family: var(--font-body);
+  font-weight: 300;
+  color: #5a5858;
+  font-size: 1rem;
+  line-height: 1.75;
+  margin: 0;
+  text-align: center;
+}
+
+/* The reference site left-aligns the opening paragraph (only the
+   second one is centered) — matching that exactly. */
+.about-brief__copy p:first-child {
+  text-align: left;
+}
+
+.about-brief__copy p:last-child {
+  margin-bottom: 0;
+}
+
+/* ==========================================================================
+   Most Romantic Emotional Wedding Story (Referral Image 2)
+   ========================================================================== */
+
+.wedding-story-feature {
+  margin-top: clamp(4.5rem, 6.5vw, 6rem);
+  max-width: 1170px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: clamp(2rem, 5.5vw, 80px);
+}
+
+.wedding-story-feature__body {
+  flex: 0 0 345px;
+  max-width: 345px;
+}
+
+.wedding-story-feature__title {
+  font-family: var(--font-display);
+  font-size: min(1.75rem, 1rem + 0.83vw);
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: normal;
+  text-transform: uppercase;
+  color: #43493f;
+  margin: 0 0 1.75rem;
+}
+
+.wedding-story-feature__title span {
+  display: block;
+}
+
+.wedding-story-feature__copy p {
+  font-family: var(--font-body);
+  font-weight: 300;
+  color: #5a5858;
+  font-size: 1rem;
+  line-height: 1.75;
+  margin: 0 0 1.25rem;
+}
+
+.wedding-story-feature__copy p:last-child {
+  margin-bottom: 0;
+}
+
+.wedding-story-feature__media {
+  flex: 1 1 auto;
+  max-width: 745px;
+  width: 100%;
+}
+
+.wedding-story-feature__card {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9.4;
+  overflow: hidden;
+  background: var(--cream-2);
+}
+
+.wedding-story-feature__card img {
+  object-fit: cover;
+  transition: transform 1.2s var(--ease);
+}
+
+.wedding-story-feature__card:hover img {
+  transform: scale(1.03);
+}
+
+.wedding-story-feature__scrim {
+  position: absolute;
+  inset: 0;
+  background: rgba(22, 21, 17, 0.08);
+  transition: background 0.4s ease;
+}
+
+.wedding-story-feature__card:hover .wedding-story-feature__scrim {
+  background: rgba(22, 21, 17, 0.18);
+}
+
+.wedding-story-feature__play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 62px;
+  height: 62px;
+  color: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 2;
+  transition: transform 0.35s var(--ease), color 0.25s ease;
+}
+
+.wedding-story-feature__play .play-icon {
+  width: 100%;
+  height: 100%;
+}
+
+.wedding-story-feature__play:hover {
+  transform: translate(-50%, -50%) scale(1.1);
+  color: #ffffff;
+}
+
+/* Below the reference container width the brief copy column narrows,
+   so let it wrap naturally like the reference does. */
+@media (max-width: 1279px) {
+  .brief-break {
+    display: none;
+  }
+}
+
+@media (max-width: 820px) {
+  .wedding-story-feature {
+    flex-direction: column;
+    align-items: center;
+    max-width: 490px;
+    gap: 2.25rem;
+  }
+
+  .wedding-story-feature__body {
+    flex: none;
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .story-break,
+  .brief-break {
+    display: none;
+  }
+}
+
+/* ==========================================================================
+   Wedding Story banner — Suman & Elisabetta (reference "info style_3")
+   Measured from the live site: photo 497px tall at 1440 (200px padding),
+   tint rgba(0,0,0,.2); eyebrow Sofia Pro 400 ~14px / .15em uppercase;
+   title Recoleta 500 34px/1.3 white; card #F1F1EE 80px/100px padding;
+   body Sofia Pro 300 16px/28px #5A5858 max 1000px; button 187x49,
+   1px #8EA3A3, ~13px / .21em uppercase, 50px top margin.
+   ========================================================================== */
+
+.story-hero {
+  background: var(--white);
+}
+
+.story-hero__photo {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(5.5rem, 13.9vw, 12.5rem) 1.6rem;
+  overflow: hidden;
+}
+
+.story-hero__photo > img {
+  object-fit: cover;
+  object-position: 50% 36%;
+}
+
+/* Reference crops the proposal photo at 49% 35% */
+.story-hero--proposal .story-hero__photo > img {
+  object-position: 49% 35%;
+}
+
+.story-hero__content {
+  position: relative;
+  z-index: 2;
+  max-width: 600px;
+  text-align: center;
+  color: #ffffff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45), 0 2px 22px rgba(0, 0, 0, 0.45);
+}
+
+.story-hero__eyebrow {
+  display: block;
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin: 0 0 20px;
+}
+
+.story-hero__title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.66rem, 1rem + 1.25vw, 2.125rem);
+  line-height: 1.3;
+  color: #ffffff;
+  margin: 0;
+}
+
+.story-hero__card {
+  background: #f1f1ee;
+  text-align: center;
+  padding: clamp(3.5rem, 5.55vw, 5rem) 1.6rem clamp(4.25rem, 6.94vw, 6.25rem);
+}
+
+.story-hero__card p {
+  max-width: 1000px;
+  margin: 0 auto;
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: 1rem;
+  line-height: 1.75;
+  color: #5a5858;
+}
+
+.story-hero__button {
+  display: inline-block;
+  margin-top: clamp(2.25rem, 3.47vw, 3.125rem);
+  padding: 14px 30px;
+  border: 1px solid #8ea3a3;
+  background: transparent;
+  color: #8ea3a3;
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 0.8125rem;
+  line-height: 1.43;
+  letter-spacing: 0.21em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.story-hero__button:hover,
+.story-hero__button:focus-visible {
+  background: #8ea3a3;
+  color: #ffffff;
+}
+
+@media (max-width: 640px) {
+  .story-hero__card {
+    padding: 3rem 1.4rem 3.5rem;
+  }
 }
 
 /* ==========================================================================
@@ -1035,14 +1414,11 @@ section[id] {
   }
 }
 
-@media (max-width: 1020px) {
+/* Reference keeps the two-column intro down to ~768px */
+@media (max-width: 840px) {
   .about__intro {
     grid-template-columns: 1fr;
     gap: 2.2rem;
-  }
-
-  .about__title {
-    font-size: clamp(2.2rem, 4.6vw, 2.9rem);
   }
 
   .about__gallery {
@@ -1209,7 +1585,7 @@ section[id] {
   }
 
   .about__title {
-    font-size: clamp(1.35rem, 6.2vw, 2.35rem);
+    font-size: clamp(1.2rem, 5.9vw, 2.35rem);
   }
 
   .about__copy p {
@@ -1296,6 +1672,646 @@ section[id] {
   .contact__details {
     font-size: 0.54rem;
     gap: 0.6rem;
+  }
+}
+
+/* ==========================================================================
+   Reference tokens (peppergreenwedding.com theme-4)
+   ========================================================================== */
+
+:root {
+  --ref-bg: #fffdfa;
+  --ref-headings: #43493f;
+  --ref-paragraphs: #5a5858;
+  --ref-accent: #f1f1ee;
+  --ref-btn: #8ea3a3;
+  --ref-btn-hover: #a4804e;
+}
+
+/* ==========================================================================
+   See My Work — feature-link cards (reference: feature-links-multiple-photos)
+   ========================================================================== */
+
+.see-work {
+  padding-top: 7.5rem;
+  padding-bottom: 0;
+  background: var(--ref-bg);
+}
+
+.see-work__container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.see-work__head {
+  text-align: center;
+}
+
+.see-work__head h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: min(1.75rem, 1rem + 0.83vw);
+  line-height: 1.4;
+  color: var(--ref-headings);
+}
+
+.see-work__row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 50px;
+  margin-top: 40px;
+}
+
+.work-card__link {
+  display: block;
+}
+
+.work-card__photo {
+  position: relative;
+  overflow: hidden;
+  padding-bottom: 140%;
+}
+
+.work-card__photo img {
+  object-fit: cover;
+}
+
+.work-card__tint {
+  position: absolute;
+  inset: 0;
+  background: var(--ref-bg);
+  opacity: 0;
+  transition: opacity 0.2s ease-out;
+}
+
+.work-card__link:hover .work-card__tint,
+.work-card__link:focus-visible .work-card__tint {
+  opacity: 0.3;
+}
+
+.work-card__content {
+  padding: 30px 0 0;
+}
+
+.work-card__title {
+  margin: 0;
+  padding: 0 15%;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: min(1.75rem, 1rem + 0.83vw);
+  line-height: 1.4;
+  text-align: center;
+  color: var(--ref-headings);
+}
+
+.work-card__subtitle {
+  padding: 20px 15% 0;
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: min(0.875rem, 1rem - 0.14vw);
+  line-height: 1.6;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--ref-paragraphs);
+}
+
+.work-card__arrow {
+  display: block;
+  margin: 25px auto 0;
+  color: var(--ref-paragraphs);
+  opacity: 0;
+  transition: opacity 0.2s ease-out;
+}
+
+.work-card__link:hover .work-card__arrow,
+.work-card__link:focus-visible .work-card__arrow {
+  opacity: 0.5;
+}
+
+.see-work__cta {
+  padding: 40px 0;
+  text-align: center;
+}
+
+/* ==========================================================================
+   Buttons (reference .button + button_style-1 outline)
+   ========================================================================== */
+
+.btn {
+  display: inline-block;
+  padding: 14px 30px;
+  border: 0;
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: min(0.8125rem, 1rem - 0.21vw);
+  line-height: 1.43;
+  letter-spacing: 0.21em;
+  text-transform: uppercase;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease-out;
+}
+
+.btn--outline {
+  background: transparent;
+  border: 1px solid var(--ref-btn);
+  color: var(--ref-btn);
+}
+
+.btn--outline:hover,
+.btn--outline:focus-visible {
+  background: var(--ref-btn-hover);
+  border-color: var(--ref-btn-hover);
+  color: var(--white);
+}
+
+/* ==========================================================================
+   Quote — reference quote style-2
+   ========================================================================== */
+
+.quote-block {
+  padding: 5rem 0;
+  background: var(--ref-bg);
+  text-align: center;
+}
+
+.quote {
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.quote__quote {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: min(1.75rem, 1rem + 0.83vw);
+  line-height: 1.31;
+  text-transform: uppercase;
+  color: var(--ref-headings);
+}
+
+.quote__line {
+  display: block;
+  width: 1px;
+  height: 40px;
+  margin: 20px auto 0;
+  background: var(--ref-headings);
+  opacity: 0.5;
+}
+
+.quote__source {
+  margin-top: 20px;
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: min(0.875rem, 1rem - 0.14vw);
+  line-height: 1.6;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ref-paragraphs);
+}
+
+/* ==========================================================================
+   Featured post — reference featured-post style-1
+   ========================================================================== */
+
+.featured-post {
+  background: var(--ref-bg);
+}
+
+.featured-post__link {
+  position: relative;
+  display: block;
+}
+
+.featured-post__photo {
+  position: relative;
+  overflow: hidden;
+  height: 600px;
+}
+
+.featured-post__photo img {
+  object-fit: cover;
+}
+
+.featured-post__text {
+  position: absolute;
+  inset: 40px 5vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: var(--white);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45), 0 2px 22px rgba(0, 0, 0, 0.45);
+}
+
+.featured-post__heading {
+  width: 100%;
+}
+
+.featured-post__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: min(2.125rem, 1rem + 1.25vw);
+  line-height: 1.3;
+  color: var(--white);
+}
+
+.featured-post__date {
+  margin-top: 20px;
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 0.75rem;
+  line-height: 1.6;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+  color: var(--white);
+}
+
+.featured-post__arrow {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  color: var(--white);
+  opacity: 0.5;
+  transition: opacity 0.2s ease-out;
+}
+
+.featured-post__link:hover .featured-post__arrow,
+.featured-post__link:focus-visible .featured-post__arrow {
+  opacity: 1;
+}
+
+.featured-post__cta {
+  padding: 40px 0;
+  text-align: center;
+}
+
+/* ==========================================================================
+   Instagram — reference instagram-graph
+   ========================================================================== */
+
+.instagram {
+  padding-top: 60px;
+  background: var(--ref-bg);
+}
+
+.instagram__head {
+  display: block;
+  text-align: center;
+}
+
+.instagram__title {
+  margin: 0 20px 40px;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: min(1.125rem, 1rem + 0.14vw);
+  line-height: 1.5;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ref-headings);
+}
+
+.instagram__row {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  margin-bottom: 40px;
+}
+
+.instagram__tile {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  padding-bottom: 100%;
+}
+
+.instagram__tile img {
+  object-fit: cover;
+  transition: opacity 0.2s ease-out;
+}
+
+.instagram__tile:hover img,
+.instagram__tile:focus-visible img {
+  opacity: 0.8;
+}
+
+.instagram__tint {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0);
+}
+
+/* ==========================================================================
+   Site footer — reference theme-4 footer style-2
+   ========================================================================== */
+
+.site-footer {
+  position: relative;
+  padding: 60px 30px;
+  background: var(--ref-bg);
+  text-align: center;
+}
+
+.site-footer__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.site-footer__ig-logo {
+  display: block;
+  width: 22px;
+  height: 22px;
+  margin-bottom: 40px;
+  color: var(--ref-paragraphs);
+  transition: color 0.2s ease-out;
+}
+
+.site-footer__ig-logo:hover {
+  color: var(--ref-btn-hover);
+}
+
+.site-footer__ig-logo svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.site-footer__username {
+  margin-bottom: 40px;
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: min(0.8125rem, 1rem - 0.21vw);
+  line-height: 1.83;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ref-paragraphs);
+  text-decoration: none;
+  transition: color 0.2s ease-out;
+}
+
+.site-footer__username:hover {
+  color: var(--ref-btn-hover);
+}
+
+.site-footer__social {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+}
+
+.site-footer__social a {
+  display: block;
+  margin-right: 20px;
+  color: var(--ref-btn);
+  transition: color 0.2s ease-out;
+}
+
+.site-footer__social a:last-child {
+  margin-right: 0;
+}
+
+.site-footer__social a:hover {
+  color: var(--ref-btn-hover);
+}
+
+.site-footer__social svg {
+  display: block;
+  width: 18px;
+  height: 18px;
+}
+
+.site-footer__nav {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+}
+
+.site-footer__nav a {
+  padding: 0 10px;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: min(0.75rem, 1rem - 0.28vw);
+  line-height: 1.5;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--ref-paragraphs);
+  transition: color 0.2s ease-out;
+}
+
+.site-footer__nav a:hover {
+  color: var(--ref-btn-hover);
+}
+
+.site-footer__copyright {
+  margin-bottom: 40px;
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: min(0.8125rem, 1rem - 0.21vw);
+  line-height: 1.83;
+  color: var(--ref-paragraphs);
+  opacity: 0.5;
+}
+
+.site-footer__top {
+  display: block;
+  width: 24px;
+  height: 90px;
+  margin: 20px auto 0;
+  color: var(--ref-paragraphs);
+  opacity: 0.5;
+  transition: opacity 0.2s ease-out;
+}
+
+.site-footer__top:hover {
+  opacity: 0.25;
+}
+
+.site-footer__top svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* ==========================================================================
+   Subpages (/stories, /films, /outdoors)
+   ========================================================================== */
+
+.subpage {
+  min-height: 100vh;
+  background: var(--ref-bg);
+}
+
+.subpage__hero {
+  padding: 10.5rem 1.5rem 4rem;
+  text-align: center;
+}
+
+.subpage__eyebrow {
+  margin: 0 0 1rem;
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: min(0.875rem, 1rem - 0.14vw);
+  line-height: 1.6;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ref-paragraphs);
+}
+
+.subpage__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: min(2.125rem, 1rem + 1.25vw);
+  line-height: 1.3;
+  color: var(--ref-headings);
+}
+
+.subpage__lede {
+  max-width: 40rem;
+  margin: 1.25rem auto 0;
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: 1rem;
+  line-height: 1.85;
+  color: var(--ref-paragraphs);
+}
+
+.subpage__gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 50px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.subpage__figure {
+  position: relative;
+  overflow: hidden;
+  padding-bottom: 140%;
+}
+
+.subpage__figure--wide {
+  grid-column: 1 / -1;
+  padding-bottom: 34%;
+}
+
+.subpage__figure img {
+  object-fit: cover;
+}
+
+.subpage__cta {
+  padding: 4.5rem 0 7.5rem;
+  text-align: center;
+}
+
+/* ==========================================================================
+   Responsive — new sections
+   ========================================================================== */
+
+@media (min-width: 1800px) {
+  .featured-post__photo {
+    height: 700px;
+  }
+}
+
+@media (max-width: 1279px) {
+  .site-footer {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+}
+
+@media (max-width: 991px) {
+  .featured-post__photo {
+    height: 525px;
+  }
+
+  .instagram__row {
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  .subpage__gallery {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 35px;
+  }
+}
+
+@media (max-width: 820px) {
+  .see-work {
+    padding-top: 5.5rem;
+  }
+
+  .see-work__row {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .work-card__content {
+    padding: 20px 0 40px;
+  }
+
+  .quote-block {
+    padding: 4rem 0;
+  }
+
+  .quote__line {
+    height: 24px;
+  }
+
+  .featured-post__photo {
+    height: 460px;
+  }
+
+  .featured-post__text {
+    inset: 40px 5vw;
+  }
+
+  .featured-post__arrow {
+    display: none;
+  }
+
+  .site-footer {
+    padding: 60px;
+  }
+
+  .subpage__hero {
+    padding-top: 9rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .featured-post__photo {
+    height: 420px;
+  }
+
+  .featured-post__title {
+    font-size: min(1.5rem, 1rem + 2vw);
+  }
+
+  .instagram__row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .subpage__gallery {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    max-width: 480px;
+  }
+
+  .subpage__figure--wide {
+    padding-bottom: 140%;
   }
 }
 

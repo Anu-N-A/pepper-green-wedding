@@ -5,20 +5,20 @@ import { useEffect, useState } from "react";
 
 const SLIDES = [
   {
-    src: "/images/hero-1.jpg",
-    alt: "A newly married couple laughing together beneath floral garlands",
+    src: "/images/Screenshot 2026-10-31 182515.png",
+    alt: "A newly married couple sitting together among pigeons in soft daylight",
     title: "Capturing Love",
     subtitle: "Stories from Pepper Green",
   },
   {
-    src: "/images/hero-2.jpg",
-    alt: "A groom placing a ring on his bride's finger under a white floral arch",
+    src: "/images/img 1.jpg",
+    alt: "A couple walking together along a sunlit garden path",
     title: "The First Look",
     subtitle: "Weddings by Pepper Green",
   },
   {
-    src: "/images/hero-3.jpg",
-    alt: "A couple framed by a carved stone arch overlooking a lake",
+    src: "/images/Screenshot 2026-10-31 181946.png",
+    alt: "A bride standing in a decorated boat on a still lake",
     title: "Two Souls, One Story",
     subtitle: "Celebrations across India",
   },
